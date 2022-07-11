@@ -1,0 +1,7 @@
+{
+  "importMap": "./import_map.json",
+  "tasks": {
+    "test_ci": "deno test --coverage=.cov && deno coverage .cov",
+    "tdd": "deno test --watch"
+  }
+}
