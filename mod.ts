@@ -22,37 +22,55 @@ export type Template = (props: Props) => string;
 export type PropsWithChildren<T> = T & { children?: string };
 export type IElement = keyof JSX.IntrinsicElements;
 
-export function h(kind: IElement, attrs: Attributes | null, children: string): string;
-export function h(kind: Template, props: Props | null, children: string): string;
-export function h(kind: IElement | Template, props: Props | Attributes | null, children: string): string {
-  if (typeof kind === 'string') {
-    const attrs = props !== null ? ` ${serializeAttrs(props as Attributes)}` : "";
+export function h(
+  kind: IElement,
+  attrs: Attributes | null,
+  children: string,
+): string;
+export function h(
+  kind: Template,
+  props: Props | null,
+  children: string,
+): string;
+export function h(
+  kind: IElement | Template,
+  props: Props | Attributes | null,
+  children: string,
+): string {
+  if (typeof kind === "string") {
+    const attrs = props !== null
+      ? ` ${serializeAttrs(props as Attributes)}`
+      : "";
     if (VoidElementTags[kind]) {
       return `<${kind}${attrs}>`;
     }
-    return `<${kind}${attrs}>${children !== undefined ? children : ''}</${kind}>`;
-  }
-  else {
-    const allProps: Props = Object.assign({ ...props }, children ? { children } : {});
+    return `<${kind}${attrs}>${
+      children !== undefined ? children : ""
+    }</${kind}>`;
+  } else {
+    const allProps: Props = Object.assign(
+      { ...props },
+      children ? { children } : {},
+    );
     return kind(allProps);
   }
 }
 
 function serializeAttrs(attrs: Attributes): string {
   const items = Object.entries(attrs)
-  .map(([key, val]) => {
-    if (val === null || val === undefined || val === false) {
-      return false;
-    }
-    if (val === true) {
-      return key;
-    }
-    if (typeof val === 'string' || typeof val === 'number') {
-      return `${key}="${val.toString()}"`;
-    }
-  })
-  .filter((item) => item !== false) as string[];
-  return items.join(' ');
+    .map(([key, val]) => {
+      if (val === null || val === undefined || val === false) {
+        return false;
+      }
+      if (val === true) {
+        return key;
+      }
+      if (typeof val === "string" || typeof val === "number") {
+        return `${key}="${val.toString()}"`;
+      }
+    })
+    .filter((item) => item !== false) as string[];
+  return items.join(" ");
 }
 
 /**
@@ -86,23 +104,23 @@ declare global {
       span: HTMLDivProps;
       script: HTMLDivProps;
       button: HTMLDivProps;
-      area: true,
-      base: true,
-      br: true,
-      col: true,
-      embed: true,
-      hr: true,
-      link: true,
-      meta: true,
-      param: true,
-      source: true,
-      track: true,
-      wbr: true,
+      area: true;
+      base: true;
+      br: true;
+      col: true;
+      embed: true;
+      hr: true;
+      link: true;
+      meta: true;
+      param: true;
+      source: true;
+      track: true;
+      wbr: true;
       input: HTMLInputProps;
       // will add more later
     }
 
-    type HTMLInputType = 'checkbox' | 'text';
+    type HTMLInputType = "checkbox" | "text";
 
     interface HTMLInputProps {
       type: HTMLInputType;
