@@ -36,7 +36,7 @@ jobs:
         run: deno cache --no-check --import-map=./import_map.json ./mod.ts
 
       - name: Run tests
-        run: deno test -A
+        run: deno task test_ci
 
       - name: Type check module script
         run: deno check --remote ./mod.ts
