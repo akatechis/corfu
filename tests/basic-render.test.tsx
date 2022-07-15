@@ -5,29 +5,29 @@ import { describe, it } from "bdd";
 
 describe("h() factory", () => {
   it("can render an intrinsic JSX element", () => {
-    const jsx = <div class="foo">Hello world</div>;
-    expect(jsx).to.equal('<div class="foo">Hello world</div>');
+    const html = <div class="foo">Hello world</div>;
+    expect(html).to.equal('<div class="foo">Hello world</div>');
   });
 
   it("can render an intrinsic JSX element with children", () => {
-    const jsx = (
+    const html = (
       <div class="foo">
         <span>Hello world</span>
       </div>
     );
-    expect(jsx).to.equal('<div class="foo"><span>Hello world</span></div>');
+    expect(html).to.equal('<div class="foo"><span>Hello world</span></div>');
   });
 
   it("can render a custom JSX element and remove falsy attrs", () => {
     interface ButtonProps {
-      primary: boolean;
+      primary?: boolean;
     }
     function Button(props: PropsWithChildren<ButtonProps>): string {
       const cls = props.primary ? "primary" : "secondary";
       return <button class={cls}>{props.children}</button>;
     }
-    const jsx = <Button primary={false}>Click me!</Button>;
-    expect(jsx).to.equal('<button class="secondary">Click me!</button>');
+    const html = <Button>Click me!</Button>;
+    expect(html).to.equal('<button class="secondary">Click me!</button>');
   });
 
   it("can render a custom JSX element without children", () => {
@@ -38,12 +38,12 @@ describe("h() factory", () => {
       const cls = props.primary ? "primary" : "secondary";
       return <button class={cls} />;
     }
-    const jsx = <Button primary={false}>Click me!</Button>;
-    expect(jsx).to.equal('<button class="secondary"></button>');
+    const html = <Button primary={false}>Click me!</Button>;
+    expect(html).to.equal('<button class="secondary"></button>');
   });
 
   it("can render a void element with boolean property", () => {
-    const jsx = <input type="checkbox" checked />;
-    expect(jsx).to.equal('<input type="checkbox" checked>');
+    const html = <input type="checkbox" checked />;
+    expect(html).to.equal('<input type="checkbox" checked>');
   });
 });

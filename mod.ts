@@ -1,3 +1,5 @@
+import "./types.ts";
+
 export type AttrValue = string | number | boolean | null | undefined;
 
 export type PropValue =
@@ -20,24 +22,23 @@ export type IElement = keyof JSX.IntrinsicElements;
 export function h(
   kind: IElement,
   attrs: Attributes | null,
-  children: string,
+  children: string
 ): string;
 export function h(
   kind: Template,
   props: Props | null,
-  children: string,
+  children: string
 ): string;
 export function h(
   kind: IElement | Template,
   props: Props | Attributes | null,
-  children: string,
+  children: string
 ): string {
   if (typeof kind === "string") {
-    const attrs = props !== null
-      ? ` ${serializeAttrs(props as Attributes)}`
-      : "";
+    const attrs =
+      props !== null ? ` ${serializeAttrs(props as Attributes)}` : "";
 
-    return VoidElementTags[kind]
+    return VoidElementTags.has(kind)
       ? renderVoidElement(kind, attrs)
       : renderClosingElement(kind, attrs, children);
   } else {
@@ -52,7 +53,7 @@ function renderVoidElement(kind: string, attrs: string): string {
 function renderClosingElement(
   kind: string,
   attrs: string,
-  children: string,
+  children: string
 ): string {
   return `<${kind}${attrs}>${children !== undefined ? children : ""}</${kind}>`;
 }
@@ -60,7 +61,7 @@ function renderClosingElement(
 function renderTemplate(
   kind: Template,
   props: Props,
-  children: string,
+  children: string
 ): string {
   const allProps: Props = {
     ...props,
@@ -89,59 +90,19 @@ function serializeAttrs(attrs: Attributes): string {
 /**
  * Void elements are elements that have no closing tag, such as `<img>`
  */
-const VoidElementTags: Record<string, boolean> = {
-  area: true,
-  base: true,
-  br: true,
-  col: true,
-  embed: true,
-  hr: true,
-  img: true,
-  input: true,
-  link: true,
-  meta: true,
-  param: true,
-  source: true,
-  track: true,
-  wbr: true,
-};
-
-declare global {
-  namespace JSX {
-    /**
-     * Todo: fill in remaining elements and attrs from https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/v17/index.d.ts#L3094
-     */
-    interface IntrinsicElements {
-      div: HTMLDivProps;
-      img: HTMLDivProps;
-      span: HTMLDivProps;
-      script: HTMLDivProps;
-      button: HTMLDivProps;
-      area: true;
-      base: true;
-      br: true;
-      col: true;
-      embed: true;
-      hr: true;
-      link: true;
-      meta: true;
-      param: true;
-      source: true;
-      track: true;
-      wbr: true;
-      input: HTMLInputProps;
-      // will add more later
-    }
-
-    type HTMLInputType = "checkbox" | "text";
-
-    interface HTMLInputProps {
-      type: HTMLInputType;
-      checked?: boolean;
-    }
-
-    interface HTMLDivProps {
-      class?: string;
-    }
-  }
-}
+const VoidElementTags = new Set<IElement>([
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
+]);
