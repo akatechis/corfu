@@ -3,6 +3,7 @@
   "tasks": {
     "clean": "rm -rf .cov",
     "test_ci": "deno test --coverage=.cov && deno coverage .cov",
+    "check": "deno task test_ci && deno fmt --check && deno lint && deno check --remote ./mod.ts",
     "tdd": "deno test --watch"
   }
 }

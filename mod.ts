@@ -1,9 +1,4 @@
-export type AttrValue =
-  | string
-  | number
-  | boolean
-  | null
-  | undefined;
+export type AttrValue = string | number | boolean | null | undefined;
 
 export type PropValue =
   | string
@@ -45,7 +40,6 @@ export function h(
     return VoidElementTags[kind]
       ? renderVoidElement(kind, attrs)
       : renderClosingElement(kind, attrs, children);
-
   } else {
     return renderTemplate(kind, props as Props, children);
   }
@@ -55,17 +49,23 @@ function renderVoidElement(kind: string, attrs: string): string {
   return `<${kind}${attrs}>`;
 }
 
-function renderClosingElement(kind: string, attrs: string, children: string): string {
-  return `<${kind}${attrs}>${
-    children !== undefined ? children : ""
-  }</${kind}>`;
+function renderClosingElement(
+  kind: string,
+  attrs: string,
+  children: string,
+): string {
+  return `<${kind}${attrs}>${children !== undefined ? children : ""}</${kind}>`;
 }
 
-function renderTemplate(kind: Template, props: Props, children: string): string {
+function renderTemplate(
+  kind: Template,
+  props: Props,
+  children: string,
+): string {
   const allProps: Props = {
     ...props,
     children,
-  }
+  };
   return kind(allProps);
 }
 
