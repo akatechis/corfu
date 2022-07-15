@@ -41,19 +41,32 @@ export function h(
     const attrs = props !== null
       ? ` ${serializeAttrs(props as Attributes)}`
       : "";
-    if (VoidElementTags[kind]) {
-      return `<${kind}${attrs}>`;
-    }
-    return `<${kind}${attrs}>${
-      children !== undefined ? children : ""
-    }</${kind}>`;
+
+    return VoidElementTags[kind]
+      ? renderVoidElement(kind, attrs)
+      : renderClosingElement(kind, attrs, children);
+
   } else {
-    const allProps: Props = Object.assign(
-      { ...props },
-      children ? { children } : {},
-    );
-    return kind(allProps);
+    return renderTemplate(kind, props as Props, children);
   }
+}
+
+function renderVoidElement(kind: string, attrs: string): string {
+  return `<${kind}${attrs}>`;
+}
+
+function renderClosingElement(kind: string, attrs: string, children: string): string {
+  return `<${kind}${attrs}>${
+    children !== undefined ? children : ""
+  }</${kind}>`;
+}
+
+function renderTemplate(kind: Template, props: Props, children: string): string {
+  const allProps: Props = {
+    ...props,
+    children,
+  }
+  return kind(allProps);
 }
 
 function serializeAttrs(attrs: Attributes): string {
