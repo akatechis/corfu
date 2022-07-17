@@ -22,21 +22,22 @@ export type IElement = keyof JSX.IntrinsicElements;
 export function h(
   kind: IElement,
   attrs: Attributes | null,
-  children: string
+  children: string,
 ): string;
 export function h(
   kind: Template,
   props: Props | null,
-  children: string
+  children: string,
 ): string;
 export function h(
   kind: IElement | Template,
   props: Props | Attributes | null,
-  children: string
+  children: string,
 ): string {
   if (typeof kind === "string") {
-    const attrs =
-      props !== null ? ` ${serializeAttrs(props as Attributes)}` : "";
+    const attrs = props !== null
+      ? ` ${serializeAttrs(props as Attributes)}`
+      : "";
 
     return VoidElementTags.has(kind)
       ? renderVoidElement(kind, attrs)
@@ -53,7 +54,7 @@ function renderVoidElement(kind: string, attrs: string): string {
 function renderClosingElement(
   kind: string,
   attrs: string,
-  children: string
+  children: string,
 ): string {
   return `<${kind}${attrs}>${children !== undefined ? children : ""}</${kind}>`;
 }
@@ -61,7 +62,7 @@ function renderClosingElement(
 function renderTemplate(
   kind: Template,
   props: Props,
-  children: string
+  children: string,
 ): string {
   const allProps: Props = {
     ...props,

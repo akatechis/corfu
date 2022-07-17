@@ -1,5 +1,4 @@
 declare global {
-
   /**
    * This module contains all the types for various HTML elements and their attributes.
    *
