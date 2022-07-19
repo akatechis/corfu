@@ -46,4 +46,17 @@ describe("h() factory", () => {
     const html = <input type="checkbox" checked />;
     expect(html).to.equal('<input type="checkbox" checked>');
   });
+
+  it("can render an element with multiple children", () => {
+    const html = (
+      <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+      </div>
+    );
+    expect(html).to.equal(
+      "<div><span>1</span><span>2</span><span>3</span></div>",
+    );
+  });
 });

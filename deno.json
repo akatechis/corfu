@@ -4,6 +4,7 @@
     "clean": "rm -rf .cov",
     "test_ci": "deno test --coverage=.cov && deno coverage .cov",
     "check": "deno task test_ci && deno fmt --check && deno lint && deno check --remote ./mod.ts",
-    "tdd": "deno test --watch ./tests/basic-render.test.tsx ./tests/elements.test.tsx"
+    "tdd": "deno test --watch",
+    "debug_tests": "deno test --inspect-brk ./tests/elements.test.tsx"
   }
 }

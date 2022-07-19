@@ -16,45 +16,71 @@ export type PropValue =
 export type Attributes = Record<string, AttrValue>;
 export type Props = Record<string, PropValue>;
 export type Template = (props: Props) => string;
-export type PropsWithChildren<T> = T & { children?: string };
+export type TChildren = string[];
+export type PropsWithChildren<T> = T & { children?: TChildren };
 export type IElement = keyof JSX.IntrinsicElements;
 
 export function h(
   kind: IElement,
   attrs: Attributes | null,
-  children: string,
+  ...children: string[]
 ): string;
 export function h(
   kind: Template,
   props: Props | null,
-  children: string,
+  ...children: string[]
 ): string;
 export function h(
   kind: IElement | Template,
   props: Props | Attributes | null,
-  children: string,
+  ...children: string[]
 ): string {
   if (typeof kind === "string") {
-    const attrs = props !== null
-      ? ` ${serializeAttrs(props as Attributes)}`
-      : "";
+    const attrs =
+      props !== null ? ` ${serializeAttrs(props as Attributes)}` : "";
 
     return VoidElementTags.has(kind)
       ? renderVoidElement(kind, attrs)
-      : renderClosingElement(kind, attrs, children);
+      : VoidSVGElementTags.has(kind)
+        ? renderVoidSVGElement(kind, attrs)
+        : renderFullElement(kind, attrs, combineChildren(children));
   } else {
-    return renderTemplate(kind, props as Props, children);
+    return renderTemplate(kind, props as Props, combineChildren(children));
   }
+}
+
+function combineChildren(children: TChildren): string {
+  let result = "";
+  for (let n = 0; n < children.length; n += 1) {
+    const child = children[n];
+    result += child;
+
+    // if:
+    //   this child is not an HTML element and the next one IS an element
+    //   this child is an HTML element and the next one IS NOT an element
+    //     insert a space between the children
+    const hasNext = n < children.length - 1;
+    const thisIsElem = child.startsWith("<");
+    const nextIsElem = hasNext && children[n + 1].startsWith("<");
+    if (hasNext && thisIsElem !== nextIsElem) {
+      result += " ";
+    }
+  }
+  return result;
 }
 
 function renderVoidElement(kind: string, attrs: string): string {
   return `<${kind}${attrs}>`;
 }
 
-function renderClosingElement(
+function renderVoidSVGElement(kind: string, attrs: string): string {
+  return `<${kind}${attrs}/>`;
+}
+
+function renderFullElement(
   kind: string,
   attrs: string,
-  children: string,
+  children: string
 ): string {
   return `<${kind}${attrs}>${children !== undefined ? children : ""}</${kind}>`;
 }
@@ -62,13 +88,17 @@ function renderClosingElement(
 function renderTemplate(
   kind: Template,
   props: Props,
-  children: string,
+  children: string
 ): string {
   const allProps: Props = {
     ...props,
     children,
   };
   return kind(allProps);
+}
+
+function mappedAttribute(attribute: string): string {
+  return SVGNamespaceExpansions.get(attribute) || attribute;
 }
 
 function serializeAttrs(attrs: Attributes): string {
@@ -78,10 +108,10 @@ function serializeAttrs(attrs: Attributes): string {
         return false;
       }
       if (val === true) {
-        return key;
+        return mappedAttribute(key);
       }
       if (typeof val === "string" || typeof val === "number") {
-        return `${key}="${val.toString()}"`;
+        return `${mappedAttribute(key)}="${val.toString()}"`;
       }
     })
     .filter((item) => item !== false) as string[];
@@ -89,7 +119,8 @@ function serializeAttrs(attrs: Attributes): string {
 }
 
 /**
- * Void elements are elements that have no closing tag, such as `<img>`
+ * Void elements are elements that have no closing tag, such as `<img>`.
+ * https://html.spec.whatwg.org/multipage/syntax.html#elements-2
  */
 const VoidElementTags = new Set<IElement>([
   "area",
@@ -106,4 +137,33 @@ const VoidElementTags = new Set<IElement>([
   "source",
   "track",
   "wbr",
+]);
+
+const VoidSVGElementTags = new Set<IElement>([
+  "circle",
+  "ellipse",
+  "image",
+  "line",
+  "mpath",
+  "path",
+  "polygon",
+  "polyline",
+  "rect",
+  "stop",
+  "use",
+  "view",
+]);
+
+const SVGNamespaceExpansions = new Map([
+  ["xlinkActuate", "xlink:actuate"],
+  ["xlinkArcrole", "xlink:arcrole"],
+  ["xlinkHref", "xlink:href"],
+  ["xlinkRole", "xlink:role"],
+  ["xlinkShow", "xlink:show"],
+  ["xlinkTitle", "xlink:title"],
+  ["xlinkType", "xlink:type"],
+  ["xmlBase", "xml:base"],
+  ["xmlLang", "xml:lang"],
+  ["xmlnsXlink", "xmlns:xlink"],
+  ["xmlSpace", "xml:space"],
 ]);
