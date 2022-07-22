@@ -141,8 +141,15 @@ const VoidElementTags = new Set<IElement>([
 ]);
 
 const VoidSVGElementTags = new Set<IElement>([
+  "animate",
+  "animateMotion",
+  "animateTransform",
   "circle",
   "ellipse",
+  "feConvolveMatrix",
+  "feTurbulence",
+  "feTile",
+  "feGaussianBlur",
   "image",
   "line",
   "mpath",
