@@ -59,6 +59,9 @@ jobs:
           name: lcov-report-artifact
           path: ./profile.lcov
 
+      - name: -- Log Report --
+        run: cat ./profile.lcov
+
       - name: Report code coverage
         uses: zgosalvez/github-actions-report-lcov@v1
         with:
