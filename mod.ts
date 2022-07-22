@@ -36,14 +36,15 @@ export function h(
   ...children: string[]
 ): string {
   if (typeof kind === "string") {
-    const attrs =
-      props !== null ? ` ${serializeAttrs(props as Attributes)}` : "";
+    const attrs = props !== null
+      ? ` ${serializeAttrs(props as Attributes)}`
+      : "";
 
     return VoidElementTags.has(kind)
       ? renderVoidElement(kind, attrs)
       : VoidSVGElementTags.has(kind)
-        ? renderVoidSVGElement(kind, attrs)
-        : renderFullElement(kind, attrs, combineChildren(children));
+      ? renderVoidSVGElement(kind, attrs)
+      : renderFullElement(kind, attrs, combineChildren(children));
   } else {
     return renderTemplate(kind, props as Props, combineChildren(children));
   }
@@ -80,7 +81,7 @@ function renderVoidSVGElement(kind: string, attrs: string): string {
 function renderFullElement(
   kind: string,
   attrs: string,
-  children: string
+  children: string,
 ): string {
   return `<${kind}${attrs}>${children !== undefined ? children : ""}</${kind}>`;
 }
@@ -88,7 +89,7 @@ function renderFullElement(
 function renderTemplate(
   kind: Template,
   props: Props,
-  children: string
+  children: string,
 ): string {
   const allProps: Props = {
     ...props,
