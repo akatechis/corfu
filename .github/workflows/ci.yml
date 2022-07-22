@@ -57,15 +57,15 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: lcov-report-artifact
-          path: ./profile.lcov
+          path: ./.lcov
 
       - name: -- Log Report --
-        run: cat ./profile.lcov
+        run: cat ./.lcov/profile.lcov
 
       - name: Report code coverage
         uses: zgosalvez/github-actions-report-lcov@v1
         with:
-          coverage-files: ./profile.lcov
+          coverage-files: ./.lcov/profile.lcov
           minimum-coverage: 90
           artifact-name: code-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
