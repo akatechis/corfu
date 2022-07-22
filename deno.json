@@ -2,9 +2,14 @@
   "importMap": "./import_map.json",
   "tasks": {
     "clean": "rm -rf .cov",
-    "test_ci": "deno test --coverage=.cov && deno coverage .cov",
+    "test_ci": "deno test --coverage=.cov && deno coverage .cov --lcov --output=.cov/profile.lcov",
     "check": "deno task test_ci && deno fmt --check && deno lint && deno check --remote ./mod.ts",
     "tdd": "deno test --watch",
     "debug_tests": "deno test --inspect-brk ./tests/elements.test.tsx"
+  },
+  "fmt": {
+    "files": {
+      "exclude": [".cov", ".lcov"]
+    }
   }
 }
