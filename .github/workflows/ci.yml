@@ -41,7 +41,7 @@ jobs:
         run: deno check --remote ./mod.ts
 
       - name: Report code coverage
-        if: startsWith(matrix.os, 'ubuntu') && matrix.deno == 'canary' && github.event_name == 'pull_request'
+        if: startsWith(matrix.os, 'ubuntu') && matrix.deno == 'canary'
         uses: zgosalvez/github-actions-report-lcov@v1
         with:
           coverage-files: ./.cov/profile.lcov
