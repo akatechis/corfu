@@ -40,32 +40,11 @@ jobs:
       - name: Type check module script
         run: deno check --remote ./mod.ts
 
-      - uses: actions/upload-artifact@master
-        if: startsWith(matrix.os, 'ubuntu') && matrix.deno == 'canary'
-        with:
-          name: lcov-report-artifact
-          path: ./.cov/profile.lcov
-
-  coverage:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Download coverage report artifact
-        uses: actions/download-artifact@master
-        with:
-          name: lcov-report-artifact
-          path: ./.lcov
-
-      - name: -- Log Report --
-        run: cat ./.lcov/profile.lcov
-
       - name: Report code coverage
+        if: startsWith(matrix.os, 'ubuntu') && matrix.deno == 'canary'
         uses: zgosalvez/github-actions-report-lcov@v1
         with:
-          coverage-files: ./.lcov/profile.lcov
+          coverage-files: ./.cov/profile.lcov
           minimum-coverage: 90
           artifact-name: code-coverage-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
