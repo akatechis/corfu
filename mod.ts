@@ -42,7 +42,7 @@ export function h(
 
     return VoidElementTags.has(kind)
       ? renderVoidElement(kind, attrs)
-      : VoidSVGElementTags.has(kind)
+      : VoidSVGElementTags.has(kind) || children.length === 0
       ? renderVoidSVGElement(kind, attrs)
       : renderFullElement(kind, attrs, combineChildren(children));
   } else {
@@ -58,6 +58,7 @@ function combineChildren(children: TChildren): string {
 
     // if:
     //   this child is not an HTML element and the next one IS an element
+    //   -- OR --
     //   this child is an HTML element and the next one IS NOT an element
     //     insert a space between the children
     const hasNext = n < children.length - 1;
