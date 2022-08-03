@@ -9,7 +9,7 @@
   },
   "fmt": {
     "files": {
-      "exclude": [".cov", ".lcov"]
+      "exclude": [".cov"]
     }
   }
 }
