@@ -4,7 +4,8 @@ Typesafe HTML templates using JSX 🚀🛡️🔥
 
 # Get Started
 
-Specify `h` as the JSX pragma and import it from `mod.ts`. Then construct JSX as if it was HTML.
+Specify `h` as the JSX pragma and import it from `mod.ts`. Then construct JSX as
+if it was HTML.
 
 ```typescript
 /* @jsx h */
@@ -13,13 +14,15 @@ import { h } from "http://deno.land/x/corfu/mod.ts";
 const html: string = <div class="message">Hello world</div>;
 ```
 
-Your JSX is synchronously converted to a string without any intermediate representation like `JSX.Element`
+Your JSX is synchronously converted to a string without any intermediate
+representation like `JSX.Element`
 
 # Templates
 
 In react and co, a function that returns `JSX.Element` is called a `Component`.
-In corfu, a function that returns `string` is called a `Template`, to reduce confusion.
-You can use the `PropsWithChildren` interface to create Templates that accept children.
+In corfu, a function that returns `string` is called a `Template`, to reduce
+confusion. You can use the `PropsWithChildren` interface to create Templates
+that accept children.
 
 ```typescript
 /* @jsx h */
