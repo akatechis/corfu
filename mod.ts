@@ -40,10 +40,10 @@ export function h(
       ? ` ${serializeAttrs(props as Attributes)}`
       : "";
 
-    return VoidElementTags.has(kind)
+    return VoidElements.has(kind)
       ? renderVoidElement(kind, attrs)
-      : VoidSVGElementTags.has(kind) || children.length === 0
-      ? renderVoidSVGElement(kind, attrs)
+      : VoidElementsWithSlash.has(kind)
+      ? renderVoidElement(kind, attrs, "/")
       : renderFullElement(kind, attrs, combineChildren(children));
   } else {
     return renderTemplate(kind, props as Props, combineChildren(children));
@@ -55,28 +55,16 @@ function combineChildren(children: TChildren): string {
   for (let n = 0; n < children.length; n += 1) {
     const child = children[n];
     result += child;
-
-    // if:
-    //   this child is not an HTML element and the next one IS an element
-    //   -- OR --
-    //   this child is an HTML element and the next one IS NOT an element
-    //     insert a space between the children
-    const hasNext = n < children.length - 1;
-    const thisIsElem = child.startsWith("<");
-    const nextIsElem = hasNext && children[n + 1].startsWith("<");
-    if (hasNext && thisIsElem !== nextIsElem) {
-      result += " ";
-    }
   }
   return result;
 }
 
-function renderVoidElement(kind: string, attrs: string): string {
-  return `<${kind}${attrs}>`;
-}
-
-function renderVoidSVGElement(kind: string, attrs: string): string {
-  return `<${kind}${attrs}/>`;
+function renderVoidElement(
+  kind: string,
+  attrs: string,
+  closingSlash = "",
+): string {
+  return `<${kind}${attrs}${closingSlash}>`;
 }
 
 function renderFullElement(
@@ -124,14 +112,12 @@ function serializeAttrs(attrs: Attributes): string {
  * Void elements are elements that have no closing tag, such as `<img>`.
  * https://html.spec.whatwg.org/multipage/syntax.html#elements-2
  */
-const VoidElementTags = new Set<IElement>([
+const VoidElements = new Set<IElement>([
   "area",
   "base",
   "br",
   "col",
   "embed",
-  "hr",
-  "img",
   "input",
   "link",
   "meta",
@@ -141,16 +127,25 @@ const VoidElementTags = new Set<IElement>([
   "wbr",
 ]);
 
-const VoidSVGElementTags = new Set<IElement>([
+const VoidElementsWithSlash = new Set<IElement>([
   "animate",
   "animateMotion",
   "animateTransform",
   "circle",
   "ellipse",
+  "feBlend",
   "feConvolveMatrix",
+  "feColorMatrix",
+  "feComposite",
   "feTurbulence",
   "feTile",
+  "feFuncR",
+  "feFuncG",
+  "feFuncB",
+  "feFuncA",
   "feGaussianBlur",
+  "hr",
+  "img",
   "image",
   "line",
   "mpath",
@@ -176,3 +171,17 @@ const SVGNamespaceExpansions = new Map([
   ["xmlnsXlink", "xmlns:xlink"],
   ["xmlSpace", "xml:space"],
 ]);
+
+let wrappedData: unknown = null;
+
+export function useData<T>(): T {
+  return wrappedData as T;
+}
+
+export function withData<T>(data: T, renderer: () => string): string {
+  wrappedData = data;
+  const result = renderer();
+  wrappedData = null;
+
+  return result;
+}

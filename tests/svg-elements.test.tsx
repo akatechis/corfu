@@ -159,25 +159,12 @@ Deno.test("h() can render a <feConvolveMatrix> element", () => {
     '<feConvolveMatrix kernelMatrix="3 0 0 0 0 0 0 0 -3"/>',
   );
 });
-Deno.test("h() can render a <feDiffuseLighting> element", () => {});
-Deno.test("h() can render a <feDisplacementMap> element", () => {});
-Deno.test("h() can render a <feDistantLight> element", () => {});
-Deno.test("h() can render a <feDropShadow> element", () => {});
-Deno.test("h() can render a <feFlood> element", () => {});
 Deno.test("h() can render a <feGaussianBlur> element", () => {
   const svg = <feGaussianBlur stdDeviation="5" edgeMode="duplicate" />;
   expect(svg).to.equal(
     '<feGaussianBlur stdDeviation="5" edgeMode="duplicate"/>',
   );
 });
-Deno.test("h() can render a <feImage> element", () => {});
-Deno.test("h() can render a <feMerge> element", () => {});
-Deno.test("h() can render a <feMergeNode> element", () => {});
-Deno.test("h() can render a <feMorphology> element", () => {});
-Deno.test("h() can render a <feOffset> element", () => {});
-Deno.test("h() can render a <fePointLight> element", () => {});
-Deno.test("h() can render a <feSpecularLighting> element", () => {});
-Deno.test("h() can render a <feSpotLight> element", () => {});
 Deno.test("h() can render a <feTile> element", () => {
   const svg = (
     <feTile in="SourceGraphic" x="50" y="50" width="100" height="100" />

@@ -107,13 +107,11 @@ Deno.test("h() can render an <audio> element", () => {
       controls
       src="/media/cc0-audio/t-rex-roar.mp3"
     >
-      Your browser does not support the
-      <code>audio</code>
-      element.
+      Your browser does not support the audio element.
     </audio>
   );
   expect(html).to.equal(
-    '<audio controls src="/media/cc0-audio/t-rex-roar.mp3">Your browser does not support the <code>audio</code> element.</audio>',
+    '<audio controls src="/media/cc0-audio/t-rex-roar.mp3">Your browser does not support the audio element.</audio>',
   );
 });
 Deno.test("h() can render a <b> element", () => {
@@ -159,7 +157,7 @@ Deno.test("h() can render a <body> element", () => {
       <p>hello</p>world!
     </body>
   );
-  expect(html).to.equal("<body><p>hello</p> world!</body>");
+  expect(html).to.equal("<body><p>hello</p>world!</body>");
 });
 Deno.test("h() can render a <br> element", () => {
   const html = <br />;
@@ -249,7 +247,7 @@ Deno.test("h() can render a <details> element", () => {
     </details>
   );
   expect(html).to.equal(
-    "<details><summary>Details</summary> Something small enough to escape casual notice.</details>",
+    "<details><summary>Details</summary>Something small enough to escape casual notice.</details>",
   );
 });
 Deno.test("h() can render a <dfn> element", () => {
@@ -328,7 +326,7 @@ Deno.test("h() can render a <figure> element", () => {
     </figure>
   );
   expect(html).to.equal(
-    '<figure><img src="/media/cc0-images/elephant-660-480.jpg" alt="Elephant at sunset"><figcaption>An elephant at sunset</figcaption></figure>',
+    '<figure><img src="/media/cc0-images/elephant-660-480.jpg" alt="Elephant at sunset"/><figcaption>An elephant at sunset</figcaption></figure>',
   );
 });
 Deno.test("h() can render a <footer> element", () => {
@@ -374,75 +372,50 @@ Deno.test("h() can render an <h6> element", () => {
   const html = <h6>Title 6</h6>;
   expect(html).to.equal("<h6>Title 6</h6>");
 });
-Deno.test("h() can render a <head> element", () => {});
-Deno.test("h() can render a <header> element", () => {});
-Deno.test("h() can render an <hgroup> element", () => {});
-Deno.test("h() can render an <hr> element", () => {});
-Deno.test("h() can render an <html> element", () => {});
-Deno.test("h() can render an <i> element", () => {});
-Deno.test("h() can render an <iframe> element", () => {});
-Deno.test("h() can render an <img> element", () => {});
-Deno.test("h() can render an <input> element", () => {});
-Deno.test("h() can render an <ins> element", () => {});
-Deno.test("h() can render a <kbd> element", () => {});
-Deno.test("h() can render a <keygen> element", () => {});
-Deno.test("h() can render a <label> element", () => {});
-Deno.test("h() can render a <legend> element", () => {});
-Deno.test("h() can render a <li> element", () => {});
-Deno.test("h() can render a <link> element", () => {});
-Deno.test("h() can render a <main> element", () => {});
-Deno.test("h() can render a <map> element", () => {});
-Deno.test("h() can render a <mark> element", () => {});
-Deno.test("h() can render a <menu> element", () => {});
-Deno.test("h() can render a <menuitem> element", () => {});
-Deno.test("h() can render a <meta> element", () => {});
-Deno.test("h() can render a <meter> element", () => {});
-Deno.test("h() can render a <nav> element", () => {});
-Deno.test("h() can render a <noindex> element", () => {});
-Deno.test("h() can render a <noscript> element", () => {});
-Deno.test("h() can render an <object> element", () => {});
-Deno.test("h() can render an <ol> element", () => {});
-Deno.test("h() can render an <optgroup> element", () => {});
-Deno.test("h() can render an <option> element", () => {});
-Deno.test("h() can render an <output> element", () => {});
-Deno.test("h() can render a <p> element", () => {});
-Deno.test("h() can render a <param> element", () => {});
-Deno.test("h() can render a <picture> element", () => {});
-Deno.test("h() can render a <pre> element", () => {});
-Deno.test("h() can render a <progress> element", () => {});
-Deno.test("h() can render a <q> element", () => {});
-Deno.test("h() can render a <rp> element", () => {});
-Deno.test("h() can render a <rt> element", () => {});
-Deno.test("h() can render a <ruby> element", () => {});
-Deno.test("h() can render a <s> element", () => {});
-Deno.test("h() can render a <samp> element", () => {});
-Deno.test("h() can render a <slot> element", () => {});
-Deno.test("h() can render a <script> element", () => {});
-Deno.test("h() can render a <section> element", () => {});
-Deno.test("h() can render a <select> element", () => {});
-Deno.test("h() can render a <small> element", () => {});
-Deno.test("h() can render a <source> element", () => {});
-Deno.test("h() can render a <span> element", () => {});
-Deno.test("h() can render a <strong> element", () => {});
-Deno.test("h() can render a <style> element", () => {});
-Deno.test("h() can render a <sub> element", () => {});
-Deno.test("h() can render a <summary> element", () => {});
-Deno.test("h() can render a <sup> element", () => {});
-Deno.test("h() can render a <table> element", () => {});
-Deno.test("h() can render a <template> element", () => {});
-Deno.test("h() can render a <tbody> element", () => {});
-Deno.test("h() can render a <td> element", () => {});
-Deno.test("h() can render a <textarea> element", () => {});
-Deno.test("h() can render a <tfoot> element", () => {});
-Deno.test("h() can render a <th> element", () => {});
-Deno.test("h() can render a <thead> element", () => {});
-Deno.test("h() can render a <time> element", () => {});
-Deno.test("h() can render a <title> element", () => {});
-Deno.test("h() can render a <tr> element", () => {});
-Deno.test("h() can render a <track> element", () => {});
-Deno.test("h() can render a <u> element", () => {});
-Deno.test("h() can render a <ul> element", () => {});
-Deno.test("h() can render a <var> element", () => {});
-Deno.test("h() can render a <video> element", () => {});
-Deno.test("h() can render a <wbr> element", () => {});
-Deno.test("h() can render a <webview> element", () => {});
+Deno.test("h() can render a <head> element", () => {
+  const html = (
+    <head>
+      <title>Hello world</title>
+    </head>
+  );
+  expect(html).to.equal("<head><title>Hello world</title></head>");
+});
+Deno.test("h() can render a <header> element", () => {
+  const html = <header>Users</header>;
+  expect(html).to.equal("<header>Users</header>");
+});
+Deno.test("h() can render an <hgroup> element", () => {
+  const html = (
+    <hgroup>
+      <h1>Calculus I</h1>
+      <p>Fundamentals</p>
+    </hgroup>
+  );
+  expect(html).to.equal(
+    "<hgroup><h1>Calculus I</h1><p>Fundamentals</p></hgroup>",
+  );
+});
+Deno.test("h() can render an <hr> element", () => {
+  const html = <hr />;
+  expect(html).to.equal("<hr/>");
+});
+Deno.test("h() can render an <html> element", () => {
+  const html = (
+    <html>
+      <div>foo</div>
+    </html>
+  );
+  expect(html).to.equal("<html><div>foo</div></html>");
+});
+Deno.test("h() can render an <i> element", () => {
+  const html = <i>hello</i>;
+  expect(html).to.equal("<i>hello</i>");
+});
+Deno.test("h() can render an <iframe> element", () => {
+  const html = <iframe src="http://google.com"></iframe>;
+  expect(html).to.equal('<iframe src="http://google.com"></iframe>');
+});
+Deno.test("h() can render an <img> element", () => {
+  const html = <img src="./monkey.png" />;
+  expect(html).to.equal('<img src="./monkey.png"/>');
+});
