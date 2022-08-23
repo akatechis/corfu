@@ -38,7 +38,7 @@ Deno.test("useData() returns data when used inside of withData()", () => {
       email: "alexandros@gmail.com",
     },
   };
-  const rendered = withData(data, () => {
+  const rendered = withData<Data>(data, () => {
     return (
       <div>
         <h1>User Profile</h1>
