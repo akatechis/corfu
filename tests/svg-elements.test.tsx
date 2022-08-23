@@ -66,43 +66,105 @@ Deno.test("h() can render a <circle> element", () => {
   const svg = <circle cx="50" cy="50" r="50" fill="#000" />;
   expect(svg).to.equal('<circle cx="50" cy="50" r="50" fill="#000"/>');
 });
-Deno.test("h() can render a <clipPath> element", () => {});
-Deno.test("h() can render a <defs> element", () => {});
-Deno.test("h() can render a <desc> element", () => {});
-Deno.test("h() can render a <ellipse> element", () => {});
-Deno.test("h() can render a <feBlend> element", () => {});
-Deno.test("h() can render a <feColorMatrix> element", () => {});
-Deno.test("h() can render a <feComponentTransfer> element", () => {});
-Deno.test("h() can render a <feComposite> element", () => {});
+Deno.test("h() can render a <clipPath> element", () => {
+  const svg = (
+    <clipPath id="myClip">
+      <circle cx="40" cy="35" r="35" />
+    </clipPath>
+  );
+  expect(svg).to.equal(
+    '<clipPath id="myClip"><circle cx="40" cy="35" r="35"/></clipPath>',
+  );
+});
+Deno.test("h() can render a <defs> element", () => {
+  const svg = (
+    <defs>
+      <circle id="mycircle" cx="0" cy="0" r="5" />
+    </defs>
+  );
+  expect(svg).to.equal(
+    '<defs><circle id="mycircle" cx="0" cy="0" r="5"/></defs>',
+  );
+});
+Deno.test("h() can render a <desc> element", () => {
+  const svg = <desc>Lorem ipsum</desc>;
+  expect(svg).to.equal("<desc>Lorem ipsum</desc>");
+});
+Deno.test("h() can render a <ellipse> element", () => {
+  const svg = <ellipse cx="100" cy="50" rx="100" ry="50" />;
+  expect(svg).to.equal('<ellipse cx="100" cy="50" rx="100" ry="50"/>');
+});
+Deno.test("h() can render a <feBlend> element", () => {
+  const svg = <feBlend in="SourceGraphic" in2="floodFill" mode="multiply" />;
+  expect(svg).to.equal(
+    '<feBlend in="SourceGraphic" in2="floodFill" mode="multiply"/>',
+  );
+});
+Deno.test("h() can render a <feColorMatrix> element", () => {
+  const svg = (
+    <feColorMatrix
+      in="SourceGraphic"
+      type="matrix"
+      values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+    />
+  );
+  expect(svg).to.equal(
+    '<feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"/>',
+  );
+});
+Deno.test("h() can render a <feComponentTransfer> element with identity functions", () => {
+  const svg = (
+    <feComponentTransfer>
+      <feFuncR type="identity"></feFuncR>
+      <feFuncG type="identity"></feFuncG>
+      <feFuncB type="identity"></feFuncB>
+      <feFuncA type="identity"></feFuncA>
+    </feComponentTransfer>
+  );
+  expect(svg).to.equal(
+    '<feComponentTransfer><feFuncR type="identity"/><feFuncG type="identity"/><feFuncB type="identity"/><feFuncA type="identity"/></feComponentTransfer>',
+  );
+});
+Deno.test("h() can render a <feComponentTransfer> element with table functions", () => {
+  const svg = (
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues="0 0 1 1"></feFuncR>
+      <feFuncG type="table" tableValues="1 1 0 0"></feFuncG>
+      <feFuncB type="table" tableValues="0 1 1 0"></feFuncB>
+    </feComponentTransfer>
+  );
+  expect(svg).to.equal(
+    '<feComponentTransfer><feFuncR type="table" tableValues="0 0 1 1"/><feFuncG type="table" tableValues="1 1 0 0"/><feFuncB type="table" tableValues="0 1 1 0"/></feComponentTransfer>',
+  );
+});
+Deno.test("h() can render a <feComponentTransfer> element with gamma functions", () => {
+  const svg = (
+    <feComponentTransfer>
+      <feFuncR type="gamma" amplitude="4" exponent="7" offset="0"></feFuncR>
+      <feFuncG type="gamma" amplitude="4" exponent="4" offset="0"></feFuncG>
+      <feFuncB type="gamma" amplitude="4" exponent="1" offset="0"></feFuncB>
+    </feComponentTransfer>
+  );
+  expect(svg).to.equal(
+    '<feComponentTransfer><feFuncR type="gamma" amplitude="4" exponent="7" offset="0"/><feFuncG type="gamma" amplitude="4" exponent="4" offset="0"/><feFuncB type="gamma" amplitude="4" exponent="1" offset="0"/></feComponentTransfer>',
+  );
+});
+Deno.test("h() can render a <feComposite> element", () => {
+  const svg = <feComposite in2="SourceGraphic" operator="over" />;
+  expect(svg).to.equal('<feComposite in2="SourceGraphic" operator="over"/>');
+});
 Deno.test("h() can render a <feConvolveMatrix> element", () => {
   const svg = <feConvolveMatrix kernelMatrix="3 0 0 0 0 0 0 0 -3" />;
   expect(svg).to.equal(
     '<feConvolveMatrix kernelMatrix="3 0 0 0 0 0 0 0 -3"/>',
   );
 });
-Deno.test("h() can render a <feDiffuseLighting> element", () => {});
-Deno.test("h() can render a <feDisplacementMap> element", () => {});
-Deno.test("h() can render a <feDistantLight> element", () => {});
-Deno.test("h() can render a <feDropShadow> element", () => {});
-Deno.test("h() can render a <feFlood> element", () => {});
-Deno.test("h() can render a <feFuncA> element", () => {});
-Deno.test("h() can render a <feFuncB> element", () => {});
-Deno.test("h() can render a <feFuncG> element", () => {});
-Deno.test("h() can render a <feFuncR> element", () => {});
 Deno.test("h() can render a <feGaussianBlur> element", () => {
   const svg = <feGaussianBlur stdDeviation="5" edgeMode="duplicate" />;
   expect(svg).to.equal(
     '<feGaussianBlur stdDeviation="5" edgeMode="duplicate"/>',
   );
 });
-Deno.test("h() can render a <feImage> element", () => {});
-Deno.test("h() can render a <feMerge> element", () => {});
-Deno.test("h() can render a <feMergeNode> element", () => {});
-Deno.test("h() can render a <feMorphology> element", () => {});
-Deno.test("h() can render a <feOffset> element", () => {});
-Deno.test("h() can render a <fePointLight> element", () => {});
-Deno.test("h() can render a <feSpecularLighting> element", () => {});
-Deno.test("h() can render a <feSpotLight> element", () => {});
 Deno.test("h() can render a <feTile> element", () => {
   const svg = (
     <feTile in="SourceGraphic" x="50" y="50" width="100" height="100" />
@@ -202,11 +264,6 @@ Deno.test("h() can render a <mask> element", () => {
   expect(svg).to.equal(
     '<mask id="myMask"><rect x="0" y="0" width="100" height="100" fill="white"/></mask>',
   );
-});
-Deno.test("h() can render a <metadata> element", () => {
-  // TODO: if we add rdf element support, we should make this test a little bit better
-  const svg = <metadata></metadata>;
-  expect(svg).to.equal("<metadata></metadata>");
 });
 Deno.test("h() can render a <mpath> element", () => {
   const svg = <mpath xlinkHref="#path1" />;

@@ -1623,7 +1623,6 @@ declare global {
       linearGradient: SVGAttributes;
       marker: SVGAttributes;
       mask: SVGAttributes;
-      metadata: SVGAttributes;
       mpath: SVGAttributes;
       path: SVGAttributes;
       pattern: SVGAttributes;
