@@ -11,11 +11,12 @@ if it was HTML.
 /* @jsx h */
 import { h } from "http://deno.land/x/corfu/mod.ts";
 
-const html: string = <div class="message">Hello world</div>;
+const html = <div class="message">Hello world</div>;
 ```
 
 Your JSX is synchronously converted to a string without any intermediate
-representation like `JSX.Element`
+representation like `JSX.Element`, or needing to call a utility to render.
+In the example above, the `html` variable holds your HTML string.
 
 # Templates
 
