@@ -65,7 +65,8 @@ Since templates do not re-render, they don't need to express behavior or state t
 over time. For now, the only thing resembling a hook is the `withData` and `useData` helpers
 that help alleviate the pain of prop drilling:
 
-```typescript
+```typescriptreact
+/* @jsx h */
 import { h, useData, withData } from "../mod.ts";
 
 interface User {
