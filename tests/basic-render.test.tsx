@@ -57,3 +57,49 @@ Deno.test("h() can render an element with multiple children", () => {
     "<div><span>1</span><span>2</span><span>3</span></div>",
   );
 });
+
+Deno.test("h() can render conditional blocks correctly", () => {
+  interface CardProps {
+    trusted?: boolean;
+  }
+  function Card(props: CardProps) {
+    return (
+      <div>
+        {props.trusted && <span>Trusted</span>}
+      </div>
+    );
+  }
+
+  const one = <Card trusted />;
+  expect(one).to.equal("<div><span>Trusted</span></div>");
+
+  const two = <Card />;
+  expect(two).to.equal("<div></div>");
+});
+
+Deno.test("h() ignores templates that return null", () => {
+  interface ModalProps {
+    visible?: boolean;
+  }
+  function Modal(props: ModalProps): string | null {
+    if (!props.visible) {
+      return null;
+    } else {
+      return <div>stuff</div>;
+    }
+  }
+
+  const visible = (
+    <div>
+      <Modal visible />
+    </div>
+  );
+  expect(visible).to.include("<div>stuff</div>");
+
+  const hidden = (
+    <div>
+      <Modal />
+    </div>
+  );
+  expect(hidden).to.equal("<div></div>");
+});
