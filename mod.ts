@@ -54,7 +54,9 @@ function combineChildren(children: TChildren): string {
   let result = "";
   for (let n = 0; n < children.length; n += 1) {
     const child = children[n];
-    result += child;
+    if (child) {
+      result += child;
+    }
   }
   return result;
 }
