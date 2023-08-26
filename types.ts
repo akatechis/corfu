@@ -16,7 +16,27 @@ declare global {
    * * https://developer.mozilla.org/en-US/docs/Web/HTML/Element
    */
   namespace JSX {
+    export type PropValue =
+      | string
+      | number
+      | boolean
+      | null
+      | undefined
+      | ((...args: unknown[]) => unknown);
+    export type Props = Record<string, PropValue>;
+    export type Template = (props: Props) => string;
+    export type TChildren = string[];
+    export type PropsWithChildren<T> = T & { children?: TChildren };
+    export type IElement = keyof JSX.IntrinsicElements;
+
+    interface Element {
+      kind: keyof JSX.IntrinsicElements | ((props: Props) => string);
+      props: Props | null;
+      children?: Element | Element[];
+    }
+
     type Booleanish = boolean | "true" | "false";
+
     // All the WAI-ARIA 1.1 role attribute values from https://www.w3.org/TR/wai-aria-1.1/#role_definitions
     type AriaRole =
       | "alert"

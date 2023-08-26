@@ -35,19 +35,6 @@ export function h(
   props: Props | Attributes | null,
   ...children: string[]
 ): string {
-  if (typeof kind === "string") {
-    const attrs = props !== null
-      ? ` ${serializeAttrs(props as Attributes)}`
-      : "";
-
-    return VoidElements.has(kind)
-      ? renderVoidElement(kind, attrs)
-      : VoidElementsWithSlash.has(kind)
-      ? renderVoidElement(kind, attrs, "/")
-      : renderFullElement(kind, attrs, combineChildren(children));
-  } else {
-    return renderTemplate(kind, props as Props, combineChildren(children));
-  }
 }
 
 function combineChildren(children: TChildren): string {
